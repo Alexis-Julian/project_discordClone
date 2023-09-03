@@ -2,16 +2,27 @@
 
 import styled from "styled-components";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import LoadingSpinning from "../../../components/LoadingSpinning";
 
 export default function Login() {
-  return (
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  return !isClient ? (
+    <div className="h-full w-full flex justify-center items-center bg-gray-700 overflow-hidden">
+      <LoadingSpinning />
+    </div>
+  ) : (
     <Homestyle>
       <Rectangle>
         <SectionLeft>
           <div className="welcome_user">
             <p className="welcome_p">¡Hola de nuevo!</p>
             <p>¡Nos alegramos mucho volver a verte!</p>
-            <p></p>
           </div>
           <form action="" className="login_form">
             <div>
@@ -27,12 +38,12 @@ export default function Login() {
           <div className="login">
             <button className="btn_login">Iniciar sesion</button>
             <div>
-              <p className="need_account">
+              <h3 className="need_account">
                 ¿Necesitas una cuenta?
                 <p className="register">
                   <Link href={"/register"}>Registrarse</Link>
                 </p>
-              </p>
+              </h3>
             </div>
           </div>
         </SectionLeft>
@@ -40,7 +51,7 @@ export default function Login() {
           <div className="login_qr"></div>
           <div className="descrip">
             <p className="QR">
-              Iniciar sesión con<div>codigo QR</div>
+              Iniciar sesión con<i>codigo QR</i>
             </p>
             <p className="message_mobile">
               Escanealo con la
@@ -144,11 +155,14 @@ const SectionLeft = styled.section`
     button:hover {
       background-color: #4752c4;
       transition: 250ms;
+      display: flex;
     }
     div {
       .need_account {
+        display: flex;
         padding-top: 4px;
         color: #a6acb2;
+        font-size: 12px;
       }
       p {
         display: flex;
@@ -187,6 +201,11 @@ const SectionRight = styled.section`
     .QR {
       font-weight: 700;
       font-size: 20px;
+      display: flex;
+      flex-direction: column;
+      i {
+        font-style: normal;
+      }
     }
     .message_mobile {
       width: 68%;
